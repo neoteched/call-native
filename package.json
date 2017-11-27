@@ -1,0 +1,22 @@
+{
+  "name": "call-native",
+  "version": "1.0.0",
+  "description": "Call native code of neoteched app from webview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neoteched/call-native.git"
+  },
+  "author": "TingSong Syu",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/neoteched/call-native/issues"
+  },
+  "homepage": "https://github.com/neoteched/call-native#readme",
+  "dependencies": {
+    "promise": "^8.0.1"
+  }
+}
