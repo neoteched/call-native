@@ -1,5 +1,5 @@
 {
-  "name": "call-native",
+  "name": "neo-call-native",
   "version": "1.0.0",
   "description": "Call native code of neoteched app from webview",
   "main": "index.js",
