@@ -75,4 +75,4 @@ document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
     }
 });
 
-exports = neo;
+module.exports = neo;
