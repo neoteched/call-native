@@ -22,7 +22,7 @@ const callNative = (o) => {
     } else if (navigator.userAgent.match(/Android/i)) {
         let r = AndroidApp.callNative(msg);
         if (r) {
-            skapp.delegates[o.ok](r);
+            eval(o.ok + "(" + r + ")");
         }
     } else {
         console.error("Only SKAPP is supported");
@@ -47,9 +47,11 @@ skapp.callAsync = (name, ...args) => {
         let errorName = "err" + randStr(5);
         skapp.delegates[successName] = (result) => {
             delete skapp.delegates[successName];
+            delete skapp.delegates[errorName];
             resolve(result);
         };
         skapp.delegates[errorName] = (error) => {
+            delete skapp.delegates[successName];
             delete skapp.delegates[errorName];
             reject(error);
         };
@@ -72,9 +74,8 @@ skapp.setTitle = (newTitle) => {
     skapp.callVoid("setTitle", newTitle);
 };
 
-skapp.getUser = async function () {
-    let str = await skapp.callAsync("getUser");
-    return JSON.parse(str);
+skapp.getUser = function () {
+    return skapp.callAsync("getUser");
 };
 
 skapp.gotoSjdct = function () {
