@@ -22,7 +22,6 @@ const callNative = (o) => {
     } else if (navigator.userAgent.match(/Android/i)) {
         let r = AndroidApp.callNative(msg);
         if (r) {
-            r = JSON.parse(r);
             skapp.delegates[o.ok](r);
         }
     } else {
@@ -74,7 +73,12 @@ skapp.setTitle = (newTitle) => {
 };
 
 skapp.getUser = async function () {
-    return await skapp.callAsync();
+    let str = await skapp.callAsync("getUser");
+    return JSON.parse(str);
+};
+
+skapp.gotoSjdct = function () {
+    skapp.callVoid("gotoSjdct");
 };
 
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
