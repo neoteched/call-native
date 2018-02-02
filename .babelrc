@@ -3,6 +3,12 @@
         "env"
     ],
     "plugins": [
-        "transform-async-to-generator"
+        [
+            "transform-runtime",
+            {
+                "polyfill": false,
+                "regenerator": true
+            }
+        ]
     ]
 }
