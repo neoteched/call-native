@@ -1,6 +1,6 @@
 {
     "name": "neo-call-native",
-    "version": "1.0.8",
+    "version": "1.1.0",
     "description": "Call native code of neoteched app from webview",
     "main": "dist/index.js",
     "scripts": {
@@ -22,7 +22,6 @@
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
-        "babel-plugin-transform-runtime": "^6.23.0",
         "babel-preset-env": "^1.6.1"
     }
 }
