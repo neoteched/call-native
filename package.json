@@ -1,6 +1,6 @@
 {
     "name": "neo-call-native",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Call native code of neoteched app from webview",
     "main": "dist/index.js",
     "scripts": {
