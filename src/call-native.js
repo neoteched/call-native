@@ -20,7 +20,11 @@ const callNative = (o) => {
     ) {
         window.webkit.messageHandlers.app.postMessage(msg);
     } else if (navigator.userAgent.match(/Android/i)) {
-        AndroidApp.callNative(msg);
+        let r = AndroidApp.callNative(msg);
+        if (r) {
+            r = JSON.parse(r);
+            skapp.delegates[o.ok](r);
+        }
     } else {
         console.error("Only SKAPP is supported");
     }
@@ -67,6 +71,10 @@ skapp.setTitle = (newTitle) => {
     if (typeof newTitle !== "string")
         newTitle = newTitle.toString();
     skapp.callVoid("setTitle", newTitle);
+};
+
+skapp.getUser = async function () {
+    return await skapp.callAsync();
 };
 
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
