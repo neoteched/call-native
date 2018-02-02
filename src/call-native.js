@@ -45,14 +45,18 @@ skapp.callAsync = (name, ...args) => {
     return new Promise((resolve, reject) => {
         let successName = "ok" + randStr(5);
         let errorName = "err" + randStr(5);
+        let cleanUp = () => {
+            setTimeout(() => {
+                delete skapp.delegates[successName];
+                delete skapp.delegates[errorName];
+            }, 10);
+        };
         skapp.delegates[successName] = (result) => {
-            delete skapp.delegates[successName];
-            delete skapp.delegates[errorName];
+            cleanUp();
             resolve(result);
         };
         skapp.delegates[errorName] = (error) => {
-            delete skapp.delegates[successName];
-            delete skapp.delegates[errorName];
+            cleanUp();
             reject(error);
         };
         callNative({
