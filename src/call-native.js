@@ -26,6 +26,7 @@ const callNative = (o) => {
         }
     } else {
         console.error("Only SKAPP is supported");
+        throw "Only SKAPP is supported";
     }
 };
 
@@ -59,12 +60,16 @@ skapp.callAsync = (name, ...args) => {
             cleanUp();
             reject(error);
         };
-        callNative({
-            func: name,
-            args: args,
-            ok: "neo.skapp.delegates." + successName,
-            err: "neo.skapp.delegates." + errorName,
-        });
+        try {
+            callNative({
+                func: name,
+                args: args,
+                ok: "neo.skapp.delegates." + successName,
+                err: "neo.skapp.delegates." + errorName,
+            });
+        } catch (error) {
+            reject(error)
+        }
     });
 };
 
