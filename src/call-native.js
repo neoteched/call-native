@@ -10,30 +10,30 @@ if (typeof window.neo.skapp !== "object") {
 }
 const neo = window.neo;
 const skapp = window.neo.skapp;
-const callNative = (o) => {
-    const msg = JSON.stringify(o);
+const callNative = (o) => {//o需要这四个属性 {func: name,args: args,ok: "",err: "",}
+    const msg = JSON.stringify(o); //将对象转为json字符串
     console.log(msg);
     if (navigator.userAgent.match(/iPad/i) ||
         navigator.userAgent.match(/iPhone/i) ||
         navigator.userAgent.match(/iPod/i) ||
         navigator.userAgent.match(/iOS/i)
-    ) {
-        window.webkit.messageHandlers.app.postMessage(msg);
-    } else if (navigator.userAgent.match(/Android/i)) {
-        let r = AndroidApp.callNative(msg);
+    ) { //判断为iPad,iPhone,iPod,ios调用window.webkit.messageHandlers.app.postMessage（此方法如判断的话会返回undefined,直接调用即可）
+        window.webkit.messageHandlers.app.postMessage(msg);//msg只接收字符串
+    } else if (navigator.userAgent.match(/Android/i)) {//判断为android设备，调用AndroidApp.callNative方法
+        let r = AndroidApp.callNative(msg);//msg只接收字符串
         if (r) {
             eval(o.ok + "(" + r + ")");
         }
-    } else {
+    } else {//不是在安卓，ios app内 会console.error
         console.error("Only SKAPP is supported");
         throw "Only SKAPP is supported";
     }
 };
 
 const randStr = (length, chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") =>
-    (length > 0 ? (chars[Math.floor(Math.random() * chars.length)] + randStr(length - 1, chars)) : "");
+    (length > 0 ? (chars[Math.floor(Math.random() * chars.length)] + randStr(length - 1, chars)) : ""); //生成字符长度为n的随机字符串
 
-skapp.callVoid = (name, ...args) => {
+skapp.callVoid = (name, ...args) => { //callVoid里封装了callNative,供简单调用，无返回值的方法调用，例如，拨打电话
     callNative({
         func: name,
         args: args,
@@ -52,13 +52,13 @@ skapp.callAsync = (name, ...args) => {
                 delete skapp.delegates[errorName];
             }, 10);
         };
-        skapp.delegates[successName] = (result) => {
-            cleanUp();
-            resolve(result);
+        skapp.delegates[successName] = (result) => {//将成功方法存储到neo.skapp.delegates上，供app调用
+            cleanUp(); //调用此方法后，过10毫秒，将绑定的成功，失败函数删除
+            resolve(result);//调用then里的方法
         };
         skapp.delegates[errorName] = (error) => {
             cleanUp();
-            reject(error);
+            reject(error);//调用catch里的方法
         };
         try {
             callNative({
@@ -73,27 +73,31 @@ skapp.callAsync = (name, ...args) => {
     });
 };
 
+//打电话
 skapp.dial = (tel) => {
     skapp.callVoid("dial", tel || "");
 };
 
+//设置title
 skapp.setTitle = (newTitle) => {
     if (typeof newTitle !== "string")
         newTitle = newTitle.toString();
     skapp.callVoid("setTitle", newTitle);
 };
 
+//获取用户信息
 skapp.getUser = function () {
     return skapp.callAsync("getUser");
 };
 
+//调app内的私教大长图
 skapp.gotoSjdct = function () {
     skapp.callVoid("gotoSjdct");
 };
 
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
     if (ev.target.tagName.toLowerCase() === "title") {
-        neo.skapp.setTitle(ev.target.innerText);
+        neo.skapp.setTitle(ev.target.innerText);//监测title有变化时执行neo.skapp.setTitle
     }
 });
 
