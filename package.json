@@ -1,12 +1,8 @@
 {
     "name": "neo-call-native",
-    "version": "1.1.3",
+    "version": "1.1.6",
     "description": "Call native code of neoteched app from webview",
     "main": "dist/index.js",
-    "bin": {
-        "babel": "node_modules/babel-cli/bin/babel.js",
-        "webpack": "node_modules/webpack/bin/webpack.js"
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "babel -o dist/index.js src/call-native.js",
