@@ -21,7 +21,7 @@ const callNative = (o) => {//o需要这四个属性 {func: name,args: args,ok: "
         window.webkit.messageHandlers.app.postMessage(msg);//msg只接收字符串
     } else if (navigator.userAgent.match(/Android/i)) {//判断为android设备，调用AndroidApp.callNative方法
         let r = AndroidApp.callNative(msg);//msg只接收字符串
-        if (r) {
+        if (r) { //拿到app返回值，调用e.ok里的方法，ios端由ios发起回调
             eval(o.ok + "(" + r + ")");
         }
     } else {//不是在安卓，ios app内 会console.error
@@ -93,6 +93,19 @@ skapp.getUser = function () {
 //调app内的私教大长图
 skapp.gotoSjdct = function () {
     skapp.callVoid("gotoSjdct");
+};
+
+//打开客户端支付大长图界面
+skapp.gotoPaydct =()=> {
+    skapp.callVoid("gotoPaydct");
+};
+//打开客户端分享界面分享
+skapp.gotoShare = (title,describe,thumb_img_url,url)=> {
+    skapp.callVoid("gotoShare",title||"",describe||"",thumb_img_url||"",url||"");
+};
+//打开客户端解密班详情界面
+skapp.gotoDecodeDetail = (product_id)=> {
+    skapp.callVoid("gotoDecodeDetail",product_id||"");
 };
 
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
