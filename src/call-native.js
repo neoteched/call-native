@@ -107,7 +107,10 @@ skapp.gotoShare = (title,describe,thumb_img_url,url)=> {
 skapp.gotoDecodeDetail = (product_id)=> {
     skapp.callVoid("gotoDecodeDetail",product_id||"");
 };
-
+//进入自学习体验课程界面
+skapp.gotoZiXueXiTiYan =()=> {
+    skapp.callVoid("gotoZiXueXiTiYan");
+};
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
     if (ev.target.tagName.toLowerCase() === "title") {
         neo.skapp.setTitle(ev.target.innerText);//监测title有变化时执行neo.skapp.setTitle
