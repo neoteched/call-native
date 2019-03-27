@@ -108,8 +108,14 @@ skapp.gotoDecodeDetail = (product_id)=> {
     skapp.callVoid("gotoDecodeDetail",product_id||"");
 };
 //进入自学习体验课程界面
-skapp.gotoZiXueXiTiYan =()=> {
-    skapp.callVoid("gotoZiXueXiTiYan");
+skapp.gotoZiXueXiTiYan =(boolStr)=> {
+    skapp.callVoid("gotoZiXueXiTiYan",boolStr);
+};
+
+
+//打开扫码界面
+skapp.gotoScan = function () {
+    skapp.callVoid("gotoScan");
 };
 document.documentElement.addEventListener("DOMSubtreeModified", (ev) => {
     if (ev.target.tagName.toLowerCase() === "title") {
