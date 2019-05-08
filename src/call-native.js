@@ -112,6 +112,15 @@ skapp.gotoZiXueXiTiYan =(boolStr)=> {
     skapp.callVoid("gotoZiXueXiTiYan",boolStr);
 };
 
+//打开客户端分享给微信朋友圈
+skapp.shareToWXPYQuan = function (title, description, thumb_img_url, url) {
+    skapp.callVoid("shareToWXPYQuan", title || "", description || "", thumb_img_url || "", url || "");
+};
+
+//打开客户端分享给微信好友
+skapp.shareToWXFrends = function (title, description, thumb_img_url, url) {
+    skapp.callVoid("shareToWXFrends", title || "", description || "", thumb_img_url || "", url || "");
+};
 
 //打开扫码界面
 skapp.gotoScan = function () {
